@@ -9,7 +9,7 @@ public class RetrofitClient {
 
     private static final String BASE_URL="https://dog.ceo/";
 
-    public static Retrofit getRetrofit(){
+    public static Retrofit getRetrofitInstance(){
 
         if (retrofit==null){
             retrofit=new retrofit2.Retrofit.Builder()

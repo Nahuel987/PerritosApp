@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  String perro1;
+    private String perro1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //retrofit
-        ApiDog api = RetrofitClient.getRetrofit().create(ApiDog.class);
+        ApiDog api = RetrofitClient.getRetrofitInstance().create(ApiDog.class);
         Call<BreedListResponse> call = api.getBreedList();
 
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<BreedListResponse> call, Response<BreedListResponse> response) {
 
                 List<String> perritos= response.body().getBreedList();
-                perro1=perritos.get(0);//llamo al primpoer perro de la lista
+                perro1=perritos.get(0);//llamo al primer perro de la lista
                 Log.e("PERRITOS",String.valueOf(perritos));
 
                 if (!perro1.equals("")) {
@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        private void whoLetTheDogsOut(){
-            ApiDog service = RetrofitClient.getRetrofitInstance().create(ApiDog.class);
-            Call<BreedImageListResponse> callImages = service.getBreedImageList(perro1);
+    }//on create
 
-        Call<BreedImageListResponse> callImages= api.getBeedImageList(perro1);
+    private void whoLetTheDogsOut(){
+        ApiDog service = RetrofitClient.getRetrofitInstance().create(ApiDog.class);
+        Call<BreedImageListResponse> callImages = service.getBeedImageList(perro1);
 
         callImages.enqueue(new Callback<BreedImageListResponse>() {
             @Override
@@ -71,15 +71,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<BreedImageListResponse> call, Throwable t) {
 
-               // Toast.makeText(MainActivity.this,"FALLO LA CONECXIONNN DE IMAGENES", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this,"FALLO LA CONECXIONNN DE IMAGENES", Toast.LENGTH_SHORT).show();
                 Log.e("IMAGENES PERRITOSSSSSSS",String.valueOf(t));
 
             }
-        });}
-
-
-    }//on create
-
+        });
+    }
 
 
 

@@ -1,9 +1,12 @@
 package com.example.perritoapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class BreedImageListResponse {
 
+    @SerializedName("message")
     private List<String> imageURL;
     private String status;
 
