@@ -11,6 +11,7 @@ import com.example.perritoapp.api.ApiDog;
 import com.example.perritoapp.api.RetrofitClient;
 import com.example.perritoapp.model.BreedImageListResponse;
 import com.example.perritoapp.model.BreedListResponse;
+import com.example.perritoapp.ui.ListaRazasFragment;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView=findViewById(R.id.RecyclerView);//1.enlazo recycler view a su vitsa xml
+        instanceDetailFragment();
 
         //retrofit
         ApiDog api = RetrofitClient.getRetrofitInstance().create(ApiDog.class);
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<BreedListResponse> call, Throwable t) {
 
                 Toast.makeText(MainActivity.this,"FALLO LA CONECXIONNN", Toast.LENGTH_SHORT).show();
-                Log.e("PERRITOSSSSSSS",String.valueOf(t));
+                Log.e("PERRITOSSS NO OK",String.valueOf(t));
 
             }
         });
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<BreedImageListResponse> call, Response<BreedImageListResponse> response) {
 
                 List<String> imagesURL=response.body().getImageURL();
-                Log.e("IMAGENES PERRITOS",String.valueOf(imagesURL));
+                Log.e("IMAGENES PERRITOS OK",String.valueOf(imagesURL));
             }
 
             @Override
@@ -83,7 +85,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void instanceDetailFragment(String name,String url){
 
+        ListaRazasFragment detailFragment=ListaRazasFragment.newInstance(name, url);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.frameLayout,detailFragment,"FRAGMENTO DE DETALLES")
+                .commit();
+
+    }
 
 
 
